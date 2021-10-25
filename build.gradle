@@ -32,6 +32,12 @@ dependencies {
 	// https://mvnrepository.com/artifact/javax.xml/jaxb-impl
 	implementation group: 'javax.xml', name: 'jaxb-impl', version: '2.1'
 	testImplementation('org.springframework.boot:spring-boot-starter-test:2.5.5')
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.5.5'
+	// https://mvnrepository.com/artifact/org.springframework.session/spring-session-jdbc
+	implementation group: 'org.springframework.session', name: 'spring-session-jdbc', version: '2.5.3'
+
+
 }
 
 

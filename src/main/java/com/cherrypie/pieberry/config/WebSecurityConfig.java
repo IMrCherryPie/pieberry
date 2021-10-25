@@ -18,11 +18,16 @@ import java.time.LocalDateTime;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .mvcMatchers("/").permitAll() // Позволяет заходить даже неавторизованным пользователям и смотреть некоторын данные
+        http
+                .antMatcher("/**")
+                .authorizeRequests()
+                .antMatchers("/", "/login**", "/js/**", "/error**").permitAll()
                 .anyRequest().authenticated()
+                .and().logout().logoutSuccessUrl("/").permitAll()
+                .and().logout().logoutSuccessUrl("/").permitAll()
                 .and()
                 .csrf().disable();
+
     }
 
 //    Сохранние авторизованного пользователя в базу данных
@@ -30,8 +35,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PrincipalExtractor principalExtractor(UserDetailsRepo userDetailsRepo){
         return map -> {
             String id = (String) map.get("sub");
+
             User user = userDetailsRepo.findById(id).orElseGet(() ->{
                 User newUser = new User();
+
                 newUser.setId(id);
                 newUser.setName((String) map.get("name"));
                 newUser.setEmail((String) map.get("email"));
