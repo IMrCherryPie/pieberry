@@ -6,6 +6,8 @@ import com.cherrypie.pieberry.repo.MessageRepo;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -50,4 +52,15 @@ public class MessageController {
     public void delete(@PathVariable("id") Message message){
         messageRepo.delete(message);
     }
+
+//    Так называемы протокол STOMP. Поднимается небольшой месседж брокер, который осуществляет перенаправления
+//    топики, подписки и прочее
+    @MessageMapping("/changeMessage")
+    @SendTo("/topic/activity")
+    public Message change(Message message){
+        return messageRepo.save(message);
+    }
+
 }
+
+
