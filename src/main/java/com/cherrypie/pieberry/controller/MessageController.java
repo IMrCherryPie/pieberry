@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 @RestController
-@RequestMapping("message")
+@RequestMapping("message/")
 public class MessageController {
     private final MessageRepo messageRepo;
     private final BiConsumer<EventType, Message> wsSender;
